@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:my_app/onboarding.dart';
 import 'package:my_app/register.dart';
 
@@ -18,8 +19,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void goon() {
     Future.delayed(Duration(seconds: 5), () {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => OnBoarding()));
+      Get.to(
+        const OnBoarding(),
+      );
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => OnBoarding()));
     });
   }
 

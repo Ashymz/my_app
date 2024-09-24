@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:my_app/firebase_auth.dart';
 import 'package:my_app/login.dart';
 import 'package:my_app/navbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +15,8 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final FirebaseAuthService _auth = FirebaseAuthService();
+
   final _formKey = GlobalKey<FormState>();
 
   var getuseremail = TextEditingController();
@@ -164,8 +169,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   SizedBox(height: 16),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => NavBar()));
+                      signUp();
+                      // Get.to(const NavBar(),
+                      //     transition: Transition.rightToLeftWithFade);
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) => NavBar()));
                       // if (_formKey.currentState!.validate()) {
                       //   _savedetails();
                       // }
@@ -207,5 +215,19 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
         ));
+  }
+
+  void signUp() async {
+    String username = getusername.text;
+    String email = getuseremail.text;
+    String password = getuserpassword.text;
+
+    User? user = await _auth.signupwithemailandpassowrd(email, password);
+    if (user != null) {
+      print('registration succesful');
+      Get.to(LoginPage());
+    } else {
+      print('registration failed');
+    }
   }
 }
