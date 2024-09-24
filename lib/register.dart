@@ -25,29 +25,29 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final getuserpassword = TextEditingController();
 
-  Future<void> registerUser() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('email', getuseremail.text);
-    await prefs.setString('username', getusername.text);
-    await prefs.setString('password', getuserpassword.text);
-  }
+  // Future<void> registerUser() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.setString('email', getuseremail.text);
+  //   await prefs.setString('username', getusername.text);
+  //   await prefs.setString('password', getuserpassword.text);
+  // }
 
-  void _savedetails() {
-    registerUser().then((_) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Registration Succesful!'),
-          duration: Duration(seconds: 5),
-        ),
-      );
-      Future.delayed(Duration(seconds: 4), () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
-        );
-      });
-    });
-  }
+  // void _savedetails() {
+  //   registerUser().then((_) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('Registration Succesful!'),
+  //         duration: Duration(seconds: 5),
+  //       ),
+  //     );
+  //     Future.delayed(Duration(seconds: 4), () {
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => LoginPage()),
+  //       );
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

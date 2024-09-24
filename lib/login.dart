@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:my_app/firebase_auth.dart';
 import 'package:my_app/navbar.dart';
 import 'package:my_app/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +14,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final getname = TextEditingController();
+  final FirebaseAuthService _auth = FirebaseAuthService();
+  final getemail = TextEditingController();
   final getpassword = TextEditingController();
 
   Future<bool> loginUser() async {
@@ -19,7 +23,8 @@ class _LoginPageState extends State<LoginPage> {
     String? storedusername = prefs.getString('username');
     String? storedpassword = prefs.getString('password');
 
-    return getname.text == storedusername && getpassword.text == storedpassword;
+    return getemail.text == storedusername &&
+        getpassword.text == storedpassword;
   }
 
   void login() {
@@ -75,9 +80,9 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: [
                   TextField(
-                    controller: getname,
+                    controller: getemail,
                     decoration: InputDecoration(
-                      labelText: 'Username',
+                      labelText: 'email',
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -92,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 16),
                   GestureDetector(
                     onTap: () {
-                      login();
+                      signin();
                     },
                     child: Container(
                       width: 350,
@@ -131,5 +136,29 @@ class _LoginPageState extends State<LoginPage> {
             ),
           )),
     );
+  }
+
+  void signin() async {
+    // String username = getusername.text;
+    String email = getemail.text;
+    String password = getpassword.text;
+
+    User? user = await _auth.signinwithemailandpassowrd(email, password);
+    if (user != null) {
+      print(user);
+      print(user.email);
+      Get.snackbar('Login Succesful', 'Login to continue',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          isDismissible: true,
+          dismissDirection: DismissDirection.vertical,
+          forwardAnimationCurve: Curves.easeInOut,
+          duration: Duration(seconds: 6));
+      // print(user.);
+      Get.to(NavBar());
+    } else {
+      print('registration failed');
+    }
   }
 }

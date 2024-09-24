@@ -10,7 +10,7 @@ class FirebaseAuthService {
           email: email, password: password);
       return credential.user;
     } catch (e) {
-      print('error occured $e');
+      print('this is what caused the error: $e');
     }
     return null;
   }
